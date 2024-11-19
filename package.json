@@ -1,0 +1,20 @@
+{
+	"name": "s3",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest --detectOpenHandles"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@aws-sdk/client-s3": "^3.693.0",
+		"@aws-sdk/s3-request-presigner": "^3.693.0",
+		"mime-types": "^2.1.35"
+	},
+	"devDependencies": {
+		"jest": "^29.7.0"
+	}
+}
