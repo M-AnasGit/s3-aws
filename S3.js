@@ -34,14 +34,18 @@ class S3 {
 	 * @param {string} bucket - The bucket to upload the object to
 	 * @param {string} key - The key the uploaded object will have in the bucket
 	 * @param {number} [expiresIn=60] - Optional. Expiration time in seconds for the link
-	 * @returns {string} pre-signed URL
+	 * @param {number} [defaultSize=5242880] - Optional. Maximum size of the file to upload
+	 * @returns {Promise<string>} pre-signed URL
 	 * @throws {Error} if the pre-signed URL could not be generated
 	 */
-	async generatePresignedUploadUrl(bucket, key, expiresIn = 60) {
+	async generatePresignedUploadUrl(bucket, key, expiresIn = 60, defaultSize = 5242880) {
 		try {
 			const params = {
 				Bucket: bucket,
 				Key: key,
+				Conditions: [
+					['content-length-range', 0, defaultSize], // Allow files up to 5MB
+				],
 			}
 			const command = new PutObjectCommand(params)
 			return await getSignedUrl(this.client, command, { expiresIn })
